@@ -2,7 +2,7 @@
   "name": "@plsr/pwa",
   "version": "3.3.6",
   "description": "Zero config PWA solution for Nuxt.js",
-  "repository": "nuxt-community/pwa-module",
+  "repository": "mathix420/pwa-module",
   "license": "MIT",
   "main": "dist/pwa.js",
   "types": "./dist/pwa.d.ts",
