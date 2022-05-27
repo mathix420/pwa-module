@@ -93,29 +93,14 @@ export function meta (nuxt, pwa: PWAContext, moduleContainer) {
       head.link.push({ hid: 'apple-touch-icon', rel: 'apple-touch-icon', href: iconBig.src, sizes: iconBig.sizes })
     }
 
-    // Launch Screen Image (IOS)
-    if (options.mobileAppIOS && pwa._iosSplash) {
-      const splashes = [
-        ['iphonese', '(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)'],
-        ['iphone6', '(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2)'],
-        ['iphoneplus', '(device-width: 621px) and (device-height: 1104px) and (-webkit-device-pixel-ratio: 3)'],
-        ['iphonex', '(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3)'],
-        ['iphonexr', '(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2)'],
-        ['iphonexsmax', '(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3)'],
-        ['ipad', '(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2)'],
-        ['ipadpro1', '(device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2)'],
-        ['ipadpro2', '(device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2)'],
-        ['ipadpro3', '(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2)']
-      ]
+    // Add PWA related links
+    if (pwa?._pwaMetas?.links?.length) {
+      head.link.push(...pwa._pwaMetas.links)
+    }
 
-      for (const [type, media] of splashes) {
-        head.link.push({
-          href: pwa._iosSplash[type],
-          media,
-          rel: 'apple-touch-startup-image',
-          hid: 'apple-touch-startup-image-' + type
-        })
-      }
+    // Force remove icons
+    if (!options.favicon) {
+      head.link = head.link.filter(link => !['apple-touch-icon', 'shortcut icon', 'icon'].includes(link.rel))
     }
   } else {
     // favicon.ico as fallback

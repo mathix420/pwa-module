@@ -1,5 +1,5 @@
 {
-  "name": "@nuxtjs/pwa",
+  "name": "@plsr/pwa",
   "version": "3.3.5",
   "description": "Zero config PWA solution for Nuxt.js",
   "repository": "nuxt-community/pwa-module",
@@ -15,7 +15,7 @@
     "build": "siroc build",
     "dev": "nuxt-ts test/fixture",
     "lint": "eslint --ext .js,.vue,.ts .",
-    "release": "yarn test && yarn build && standard-version && git push --follow-tags && npm publish",
+    "release": "yarn lint && yarn build && standard-version && git push --follow-tags && npm publish",
     "test": "yarn lint && jest"
   },
   "dependencies": {
@@ -26,6 +26,7 @@
     "hasha": "^5.2.2",
     "jimp-compact": "^0.16.1",
     "lodash.template": "^4.5.0",
+    "pwa-asset-generator": "^6.0.8",
     "serve-static": "^1.14.1",
     "workbox-cdn": "^5.1.4"
   },

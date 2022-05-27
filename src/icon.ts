@@ -1,28 +1,23 @@
 import { join, resolve } from 'path'
-import { fork } from 'child_process'
 import fs from 'fs-extra'
 import hasha from 'hasha'
+import pwaAssetGenerator from 'pwa-asset-generator'
 import type { PWAContext, IconOptions } from '../types'
-import { joinUrl, getRouteParams, sizeName, emitAsset, PKG, PKG_DIR } from './utils'
+import { joinUrl, getRouteParams, emitAsset, PKG_DIR } from './utils'
 
 export async function icon (nuxt, pwa: PWAContext, moduleContainer) {
   const { publicPath } = getRouteParams(nuxt.options)
 
   // Defaults
   const defaults: IconOptions = {
-    sizes: [64, 120, 144, 152, 192, 384, 512],
-
-    iosSizes: [
-      [1536, 2048, 'ipad'], // Ipad
-      [1536, 2048, 'ipadpro9'], // Ipad Pro 9.7"
-      [1668, 2224, 'ipadpro10'], // Ipad Pro 10.5"
-      [2048, 2732, 'ipadpro12'], // Ipad Pro 12.9"
-      [640, 1136, 'iphonese'], // Iphone SE
-      [50, 1334, 'iphone6'], // Iphone 6
-      [1080, 1920, 'iphoneplus'], // Iphone Plus
-      [1125, 2436, 'iphonex'], // Iphone X
-      [828, 1792, 'iphonexr'], // Iphone XR
-      [1242, 2688, 'iphonexsmax'] // Iphone XS Max
+    assetsGenerator: [
+      {
+        scrape: false,
+        background: 'white',
+        portraitOnly: true,
+        log: false,
+        quality: 90
+      }
     ],
 
     fileName: 'icon.png',
@@ -39,6 +34,7 @@ export async function icon (nuxt, pwa: PWAContext, moduleContainer) {
 
     // @ts-ignore
     _iconHash: null,
+    _metaLinks: null,
     _assets: null,
     _manifestIcons: null,
     _iosSplash: null
@@ -120,36 +116,93 @@ function addPlugin (_nuxt, options, moduleContainer) {
 }
 
 async function generateIcons (_nuxt, options) {
-  // Get hash of source image
+  // Get hash of source icon
   if (!options.iconHash) {
-    options.iconHash = await hasha.fromFile(options.source).then(h => h.substring(0, 6))
+    options.iconHash = await hasha.fromFile(options.source)
   }
 
-  // Icons to be emited by webpack
+  const configHash = hasha(JSON.stringify({
+    ...options.assetsGenerator,
+    iconHash: options.iconHash
+  })).substring(0, 6)
+
+  options._manifestIcons = []
+  options._metaLinks = []
   options._assets = []
 
-  // Manifest icons
-  const purpose = options.purpose ? options.purpose.join(' ') : undefined
-  options._manifestIcons = []
-  for (const size of options.sizes) {
-    const name = sizeName(size)
-    const target = `${options.targetDir}/icon_${name}.${options.iconHash}.png`
-    options._assets.push({ name, target })
-    options._manifestIcons.push({
-      src: joinUrl(options.publicPath, target),
-      sizes: name,
-      type: 'image/png',
-      purpose
-    })
-  }
+  // TODO: check if hash exists
 
-  // Generate _iosSplash
-  options._iosSplash = {}
-  for (const size of options.iosSizes) {
-    const name = sizeName(size)
-    const target = `${options.targetDir}/splash_${name}.${options.iconHash}.png`
-    options._assets.push({ name, target })
-    options._iosSplash[size[2]] = joinUrl(options.publicPath, target)
+  // Clean cache folder
+  await fs.remove(options.cacheDir)
+  await fs.mkdirp(options.cacheDir)
+
+  for (const config of options.assetsGenerator) {
+    // Generate spash and icons
+    const res = await pwaAssetGenerator.generateImages(
+      options.source,
+      options.cacheDir,
+      {
+        ...config,
+        pathOverride: options.targetDir
+      }
+    )
+
+    const pwaHead = {
+      link: [],
+      meta: []
+    }
+
+    // Map all meta generated
+    for (const [, meta] of Object.entries(res.htmlMeta)) {
+      const trimmedMeta = (meta as string).trim()
+      const type = trimmedMeta.match(/^<(\w+)\s/)[1]
+      pwaHead[type].push(
+        // Convert HTML tags back into Objects
+        ...trimmedMeta.split('\n').map(line => Object.fromEntries(
+          Array.from(line.matchAll(/\s(\w+)="([^"]+)"/g))
+            .map(([, key, value]) => [key, value])
+        ))
+      )
+    }
+
+    // For now, ignore meta tags
+    delete pwaHead.meta
+
+    options._metaLinks.push(...pwaHead.link.map((link, id) => {
+      const splittedHref = link.href.split('.')
+      const target = splittedHref.slice(0, splittedHref.length - 1)
+        .concat([configHash])
+        .concat(splittedHref.slice(splittedHref.length - 1))
+        .join('.')
+      return {
+        ...link,
+        hid: `${link.rel}-pwa-gen-${id}`,
+        href: joinUrl(options.publicPath, target)
+      }
+    }))
+
+    options._manifestIcons.push(...res.manifestJsonContent.map((entry) => {
+      const splittedSrc = entry.src.split('.')
+      const target = splittedSrc.slice(0, splittedSrc.length - 1)
+        .concat([configHash])
+        .concat(splittedSrc.slice(splittedSrc.length - 1))
+        .join('.')
+      return {
+        ...entry,
+        src: joinUrl(options.publicPath, target)
+      }
+    }))
+
+    // Icons to be emited by webpack
+    options._assets.push(...res.savedImages.map((image) => {
+      const splittedPath = image.path.split('/')
+      const splittedSrc = splittedPath[splittedPath.length - 1].split('.')
+      const target = splittedSrc.slice(0, splittedSrc.length - 1)
+        .concat([configHash])
+        .concat(splittedSrc.slice(splittedSrc.length - 1))
+        .join('.')
+      return { cacheLocation: image.path, target: `${options.targetDir}/${target}` }
+    }))
   }
 }
 
@@ -163,47 +216,15 @@ function addManifest (_nuxt, options, pwa) {
   }
   pwa.manifest.icons.push(...options._manifestIcons)
 
-  pwa._iosSplash = {
-    ...options._iosSplash
+  pwa._pwaMetas = {
+    links: [
+      ...options._metaLinks
+    ]
   }
 }
 
 function emitAssets (nuxt, options) {
-  // Start resize task in background
-  const resizePromise = resizeIcons(nuxt, options)
-
-  for (const { name, target } of options._assets) {
-    const srcFileName = join(options.cacheDir, `${name}.png`)
-    emitAsset(nuxt, target, resizePromise.then(() => fs.readFile(srcFileName)))
+  for (const { cacheLocation, target } of options._assets) {
+    emitAsset(nuxt, target, fs.readFile(cacheLocation))
   }
-}
-
-async function resizeIcons (_nuxt, options) {
-  const resizeOpts = JSON.stringify({
-    version: PKG.version,
-    input: options.source,
-    distDir: options.cacheDir,
-    sizes: [
-      ...options.sizes,
-      ...options.iosSizes
-    ]
-  })
-
-  const integrityFile = join(options.cacheDir, '.' + hasha(resizeOpts).substr(0, 8))
-
-  if (fs.existsSync(integrityFile)) {
-    return
-  }
-  await fs.remove(options.cacheDir)
-  await fs.mkdirp(options.cacheDir)
-
-  // eslint-disable-next-line promise/param-names
-  await new Promise((_resolve, _reject) => {
-    const child = fork(resolve(PKG_DIR, 'lib/resize.js'), [resizeOpts], { execArgv: [] })
-    child.on('exit', (code) => {
-      return code ? _reject(code) : _resolve()
-    })
-  })
-
-  await fs.writeFile(integrityFile, '')
 }
