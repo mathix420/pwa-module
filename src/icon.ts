@@ -1,9 +1,12 @@
 import { join, resolve } from 'path'
 import fs from 'fs-extra'
 import hasha from 'hasha'
+import consola from 'consola'
 import pwaAssetGenerator from 'pwa-asset-generator'
 import type { PWAContext, IconOptions } from '../types'
 import { joinUrl, getRouteParams, emitAsset, PKG_DIR } from './utils'
+
+const logger = consola.withScope('nuxt:pwa:icon')
 
 export async function icon (nuxt, pwa: PWAContext, moduleContainer) {
   const { publicPath } = getRouteParams(nuxt.options)
@@ -133,6 +136,7 @@ async function generateIcons (_nuxt, options) {
   // TODO: check if hash exists
   const cacheFile = `${options.cacheDir}/.${configHash}`
   if (fs.existsSync(cacheFile)) {
+    logger.info('Using cached icons and splash screens')
     const res = fs.readFileSync(cacheFile, { encoding: 'utf-8', flag: 'r' })
     const j = JSON.parse(res)
     options._manifestIcons = j.manifestIcons
@@ -140,6 +144,8 @@ async function generateIcons (_nuxt, options) {
     options._assets = j.assets
     return
   }
+
+  logger.info('Cache not found, generating icons and splash screens')
 
   // Clean cache folder
   await fs.remove(options.cacheDir)
@@ -214,6 +220,7 @@ async function generateIcons (_nuxt, options) {
     }))
   }
 
+  logger.info('Caching icons and splash screens')
   fs.writeFileSync(cacheFile, JSON.stringify({
     manifestIcons: options._manifestIcons,
     metaLinks: options._metaLinks,

@@ -16,7 +16,7 @@
     "build": "siroc build",
     "dev": "nuxt-ts test/fixture",
     "lint": "eslint --ext .js,.vue,.ts .",
-    "release": "yarn lint && yarn build && standard-version && git push --follow-tags && npm publish",
+    "release": "yarn lint && yarn build && standard-version && git push --follow-tags && npm publish --access=public --no-verify",
     "test": "yarn lint && jest"
   },
   "dependencies": {
