@@ -131,6 +131,15 @@ async function generateIcons (_nuxt, options) {
   options._assets = []
 
   // TODO: check if hash exists
+  const cacheFile = `${options.cacheDir}/.${configHash}`
+  if (fs.existsSync(cacheFile)) {
+    const res = fs.readFileSync(cacheFile, { encoding: 'utf-8', flag: 'r' })
+    const j = JSON.parse(res)
+    options._manifestIcons = j.manifestIcons
+    options._metaLinks = j.metaLinks
+    options._assets = j.assets
+    return
+  }
 
   // Clean cache folder
   await fs.remove(options.cacheDir)
@@ -204,6 +213,12 @@ async function generateIcons (_nuxt, options) {
       return { cacheLocation: image.path, target: `${options.targetDir}/${target}` }
     }))
   }
+
+  fs.writeFileSync(cacheFile, JSON.stringify({
+    manifestIcons: options._manifestIcons,
+    metaLinks: options._metaLinks,
+    assets: options._assets
+  }), { encoding: 'utf-8', flag: 'w+' })
 }
 
 function addManifest (_nuxt, options, pwa) {
