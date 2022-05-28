@@ -1,6 +1,6 @@
 {
   "name": "@plsr/pwa",
-  "version": "3.3.7",
+  "version": "3.3.8",
   "description": "Zero config PWA solution for Nuxt.js",
   "repository": "mathix420/pwa-module",
   "license": "MIT",
