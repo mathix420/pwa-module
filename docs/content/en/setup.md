@@ -9,20 +9,20 @@ Check the [Nuxt.js documentation](https://nuxtjs.org/api/configuration-modules#t
 
 ## Installation
 
-Add `@nuxtjs/pwa` dependency to your project:
+Add `@plsr/pwa` dependency to your project:
 
 <code-group>
   <code-block label="Yarn" active>
 
   ```bash
-  yarn add --dev @nuxtjs/pwa
+  yarn add --dev @plsr/pwa
   ```
 
   </code-block>
   <code-block label="NPM">
 
   ```bash
-  npm i --save-dev @nuxtjs/pwa
+  npm i --save-dev @plsr/pwa
   ```
 
   </code-block>
@@ -33,7 +33,7 @@ Edit your `nuxt.config.js` file to add pwa module::
 ```js{}[nuxt.config.js]
 {
   buildModules: [
-    '@nuxtjs/pwa',
+    '@plsr/pwa',
   ]
 }
 ```

@@ -22,14 +22,14 @@
 Copyright (c) - Nuxt Community
 
 <!-- Badges -->
-[npm-version-src]: https://img.shields.io/npm/v/@nuxtjs/pwa/latest.svg?style=flat-square
-[npm-version-href]: https://npmjs.com/package/@nuxtjs/pwa
+[npm-version-src]: https://img.shields.io/npm/v/@plsr/pwa/latest.svg?style=flat-square
+[npm-version-href]: https://npmjs.com/package/@plsr/pwa
 
-[npm-downloads-src]: https://img.shields.io/npm/dm/@nuxtjs/pwa.svg?style=flat-square
-[npm-downloads-href]: https://npmjs.com/package/@nuxtjs/pwa
+[npm-downloads-src]: https://img.shields.io/npm/dm/@plsr/pwa.svg?style=flat-square
+[npm-downloads-href]: https://npmjs.com/package/@plsr/pwa
 
-[checks-src]: https://flat.badgen.net/github/checks/nuxt-community/pwa-module/dev
-[checks-href]: https://github.com/nuxt-community/pwa-module/actions
+[checks-src]: https://flat.badgen.net/github/checks/mathix420/pwa-module/dev
+[checks-href]: https://github.com/mathix420/pwa-module/actions
 
-[codecov-src]: https://img.shields.io/codecov/c/github/nuxt-community/pwa-module.svg?style=flat-square
-[codecov-href]: https://codecov.io/gh/nuxt-community/pwa-module
+[codecov-src]: https://img.shields.io/codecov/c/github/mathix420/pwa-module.svg?style=flat-square
+[codecov-href]: https://codecov.io/gh/mathix420/pwa-module

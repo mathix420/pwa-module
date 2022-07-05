@@ -41,7 +41,7 @@ pwa: {
 - <sup>\*1</sup> Mandatory (according [to Google](https://web.dev/add-manifest)).
   Although [official documentation](https://w3c.github.io/manifest/#json-schema) only mentions `name` and `icons`
 - <sup>\*2</sup> Recommended (according [to Google](https://web.dev/add-manifest))
-- <sup>\*3</sup> Please see [wiki](https://github.com/nuxt-community/pwa-module/wiki/.webmanifest)
+- <sup>\*3</sup> Please see [wiki](https://github.com/mathix420/pwa-module/wiki/.webmanifest)
 
 [icon module]: https://pwa.nuxtjs.org/icon
 [meta module]: https://pwa.nuxtjs.org/meta
@@ -79,4 +79,4 @@ Source: https://developer.chrome.com/apps/manifest/name
 ## `useWebmanifestExtension`:
 
 This options sets the manifest file extension to `.json` or `.webmanifest`. For more information, check
-[this wiki page](https://github.com/nuxt-community/pwa-module/wiki/.webmanifest).
+[this wiki page](https://github.com/mathix420/pwa-module/wiki/.webmanifest).
