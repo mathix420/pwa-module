@@ -220,7 +220,7 @@ async function generateIcons (_nuxt, options) {
     }))
   }
 
-  logger.info('Caching icons and splash screens')
+  logger.success('Generation done, caching icons and splash screens')
   fs.writeFileSync(cacheFile, JSON.stringify({
     manifestIcons: options._manifestIcons,
     metaLinks: options._metaLinks,
