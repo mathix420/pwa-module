@@ -27,7 +27,7 @@
     "hasha": "^5.2.2",
     "jimp-compact": "^0.16.1",
     "lodash.template": "^4.5.0",
-    "pwa-asset-generator": "^6.0.8",
+    "pwa-asset-generator": "^6.1.0",
     "serve-static": "^1.14.1",
     "workbox-cdn": "^5.1.4"
   },
