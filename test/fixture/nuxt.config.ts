@@ -65,7 +65,7 @@ export default {
         method: 'GET'
       },
       {
-        urlPattern: 'https://pwa.nuxtjs.org/.*',
+        urlPattern: 'https://pwa-module.vercel.app/.*',
         handler: 'CacheFirst',
         method: 'GET',
         strategyOptions: {

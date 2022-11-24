@@ -7,7 +7,7 @@
 
 > Zero config PWA solution for Nuxt.js
 
-📖 [**Read Documentation**](https://pwa.nuxtjs.org)
+📖 [**Read Documentation**](https://pwa-module.vercel.app)
 
 ## Installation
 

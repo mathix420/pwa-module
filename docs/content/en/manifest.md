@@ -43,8 +43,8 @@ pwa: {
 - <sup>\*2</sup> Recommended (according [to Google](https://web.dev/add-manifest))
 - <sup>\*3</sup> Please see [wiki](https://github.com/mathix420/pwa-module/wiki/.webmanifest)
 
-[icon module]: https://pwa.nuxtjs.org/icon
-[meta module]: https://pwa.nuxtjs.org/meta
+[icon module]: https://pwa-module.vercel.app/icon
+[meta module]: https://pwa-module.vercel.app/meta
 [maximum of 45 characters]: https://developer.chrome.com/apps/manifest/name
 [maximum of 12 characters]: https://developer.chrome.com/apps/manifest/name
 [loading color]: https://nuxtjs.org/api/configuration-loading/#customizing-the-progress-bar
