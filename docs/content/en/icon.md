@@ -35,7 +35,7 @@ Array of sizes to be generated (Square).
 - Default: `icons`
 
 **plugin**
-- Default: true
+- Default: `true`
 
 Make icons accessible through `ctx` or Vue instances.
 
@@ -43,7 +43,7 @@ Example: `ctx.$icon(512)` will return the url for the icon with the size of `512
 Will return an empty string when no icon in the given size is available (eg. when the size is not in `sizes` array).
 
 **pluginName**
-- Default: '$icon'
+- Default: `'$icon'`
 
 Name of property for accessible icons.
 
@@ -65,3 +65,71 @@ More detail of "purpose": [https://w3c.github.io/manifest/#purpose-member](https
 - Default: `{rootDir}/node_modules/.cache/pwa/icon`
 
 Cache dir for generated icons
+
+**assetsGenerator**
+- Default:
+    ```js
+    [
+      {
+        scrape: false,
+        background: 'white',
+        portraitOnly: true,
+        log: false,
+        quality: 90
+      }
+    ]
+    ```
+- Type: `Array<pwaAssetGenerator.Options>`
+
+Allowed values: [pwa-asset-generator/src/models/options.ts](https://github.com/elegantapp/pwa-asset-generator/blob/master/src/models/options.ts)
+
+
+## example
+
+```js{}[nuxt.config.js]
+const baseIconConfig = {
+  portraitOnly: true,
+  noSandbox: true,
+  scrape: false,
+  quality: 90,
+  log: false,
+}
+
+export default {
+  pwa: {
+    icon: {
+      plugin: false,
+      cacheDir: '.local-cache/icons',
+      assetsGenerator: [
+        // Spash iOS
+        {
+          ...baseIconConfig,
+          scrape: true,
+          splashOnly: true,
+          padding: 'calc(50vh - 15vw) calc(50vw - 15vw)',
+          background: '#0d0d0d',
+          type: 'png',
+        },
+        // Non-maskables Icons
+        {
+          ...baseIconConfig,
+          opaque: false,
+          iconOnly: true,
+          padding: '0px',
+          background: 'transparent',
+          maskable: false,
+        },
+        // Maskables Icons
+        {
+          ...baseIconConfig,
+          opaque: true,
+          iconOnly: true,
+          padding: '10%',
+          background: 'white',
+          maskable: true,
+        },
+      ],
+    },
+  },
+}
+```
