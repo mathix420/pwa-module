@@ -1,4 +1,4 @@
-# PWA Module
+# *Better maintained* PWA Module
 
 [![npm version][npm-version-src]][npm-version-href]
 [![npm downloads][npm-downloads-src]][npm-downloads-href]
@@ -8,6 +8,22 @@
 > Zero config PWA solution for Nuxt.js
 
 📖 [**Read Documentation**](https://pwa.nuxtjs.org)
+
+## Installation
+
+```bash
+npm i -D @plsr/pwa
+```
+
+```bash
+yarn add -D @plsr/pwa
+```
+
+
+## Aditional features
+
+- Use of [`pwa-asset-generator`](https://github.com/elegantapp/pwa-asset-generator#readme) to generate better PWA assets.
+- Up to date `workbox-cli` via the [`workbox-lib`](https://github.com/nuxt-community/workbox-cdn#readme) library.
 
 ## Development
 
