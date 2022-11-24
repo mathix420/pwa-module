@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.3.12](https://github.com/mathix420/pwa-module/compare/v3.3.11...v3.3.12) (2022-11-24)
+
+
+### Bug Fixes
+
+* **workbox:** replace workbox-cdn with workbox-lib to get latest workbox features/fixes ([c16b21c](https://github.com/mathix420/pwa-module/commit/c16b21c0baa14a7eb97f5ea21c1859b53bc8d64d))
+
 ### [3.3.11](https://github.com/mathix420/pwa-module/compare/v3.3.10...v3.3.11) (2022-07-05)
 
 ### [3.3.10](https://github.com/mathix420/pwa-module/compare/v3.3.9...v3.3.10) (2022-05-28)
