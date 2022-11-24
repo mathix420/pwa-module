@@ -1,4 +1,4 @@
-import { version as workboxVersion } from 'workbox-cdn/package.json'
+import { version as workboxVersion } from 'workbox-lib/package.json'
 import type { WorkboxOptions } from '../../types'
 
 export const defaults: WorkboxOptions = {

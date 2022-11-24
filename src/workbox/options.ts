@@ -126,7 +126,7 @@ export function getOptions (nuxt, pwa: PWAContext): WorkboxOptions {
 
   // Workbox URL
   if (!options.workboxURL) {
-    options.workboxURL = `https://cdn.jsdelivr.net/npm/workbox-cdn@${options.workboxVersion}/workbox/workbox-sw.js`
+    options.workboxURL = `https://cdn.jsdelivr.net/npm/workbox-lib@${options.workboxVersion}/workbox/workbox-sw.js`
   }
 
   // Workbox Config

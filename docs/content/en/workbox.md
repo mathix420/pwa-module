@@ -28,7 +28,7 @@ pwa: {
 
 ### `workboxURL`
 
-(String) URL for workbox CDN. Default is JSDelivr - See [Workbox CDN](https://github.com/nuxt-community/workbox-cdn). You can also use `config.modulePathPrefix` if you need to rewrite module paths.
+(String) URL for workbox CDN. Default is JSDelivr - See [Workbox CDN](https://github.com/nuxt-community/workbox-lib). You can also use `config.modulePathPrefix` if you need to rewrite module paths.
 
 ### `importScripts`
 

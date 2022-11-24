@@ -12448,10 +12448,10 @@ wordwrap@^1.0.0:
   resolved "https://registry.yarnpkg.com/wordwrap/-/wordwrap-1.0.0.tgz#27584810891456a4171c8d0226441ade90cbcaeb"
   integrity sha1-J1hIEIkUVqQXHI0CJkQa3pDLyus=
 
-workbox-cdn@^5.1.4:
-  version "5.1.4"
-  resolved "https://registry.yarnpkg.com/workbox-cdn/-/workbox-cdn-5.1.4.tgz#dbd8acee70b1978be70106207590bbb76af935cf"
-  integrity sha512-04gM3mi8QGutokkSaA9xunVfjURnLbo9TTWyi8+pSDCEW5cD8u5GbJiliLK1vB9CShk/9OY1UDfW+XcmD+d6KQ==
+workbox-lib@^5.1.4:
+  version "6.1.5"
+  resolved "https://registry.yarnpkg.com/workbox-lib/-/workbox-lib-6.1.5.tgz#0a1ea78afdc33f35f62faf5993ec1d715b075285"
+  integrity sha512-Kc7w1mB7XRH41Jpn+gVHswYOMMZj9QK6lMZwGFLxU/gmn0C1tVT2yGekQHsLUMUQJtBV5i8n5lxNqyHudYan/g==
 
 worker-farm@^1.7.0:
   version "1.7.0"
