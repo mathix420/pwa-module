@@ -64,7 +64,7 @@ export async function icon (nuxt, pwa: PWAContext, moduleContainer) {
     if (!Array.isArray(options.purpose)) {
       options.purpose = [options.purpose]
     }
-    const validPurpose = ['badge', 'maskable', 'any']
+    const validPurpose = ['badge', 'monochrome', 'maskable', 'any']
     if (options.purpose.find(p => !validPurpose.includes(p))) {
       // eslint-disable-next-line no-console
       console.warn('[pwa] [icon] Some invalid items removed from `options.purpose`. Valid values: ' + validPurpose)

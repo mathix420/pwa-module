@@ -43,7 +43,7 @@ describe('pwa', () => {
     expect(manifestContent.icons).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          purpose: expect.stringMatching(/( ?(any|maskable|badge))+/)
+          purpose: expect.stringMatching(/( ?(any|maskable|badge|monochrome))+/)
         })
       ])
     )
